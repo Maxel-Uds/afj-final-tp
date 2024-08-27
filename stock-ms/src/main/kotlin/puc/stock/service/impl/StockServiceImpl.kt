@@ -3,7 +3,7 @@ package puc.stock.service.impl
 import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
-import puc.stock.controller.StockUpdateResponse
+import puc.stock.controller.response.StockUpdateResponse
 import puc.stock.controller.request.StockUpdateRequest
 import puc.stock.exception.NotEnoughStockException
 import puc.stock.exception.ProductNotFoundException

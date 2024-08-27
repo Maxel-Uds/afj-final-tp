@@ -1,4 +1,4 @@
-package puc.stock.controller
+package puc.stock.controller.response
 
 data class StockUpdateResponse(
     val id: Long,
