@@ -21,7 +21,9 @@ class StockServiceImpl(val stockRepository: StockRepository) : StockService {
     @Transactional
     override fun writeDownStock(stockUpdateRequest: StockUpdateRequest) : ResponseEntity<StockUpdateResponse> {
         val stock = stockRepository.findByProductId(stockUpdateRequest.productId!!)
-            ?: throw ProductNotFoundException(String.format("Produto com id [%s] não encontrado", stockUpdateRequest.productId))
+            ?: throw ProductNotFoundException(String.format("Produto com id [%s] não encontrado",
+                stockUpdateRequest.productId
+            ))
 
         if (stock.quantity < stockUpdateRequest.quantity!!) {
             logger.error("=== Erro, produto [{}] com estoque insuficiente", stockUpdateRequest.productId)
@@ -43,7 +45,7 @@ class StockServiceImpl(val stockRepository: StockRepository) : StockService {
 
         if (existingStock != null) {
             logger.error("=== Erro, o produto [{}] já existe no estoque", stockUpdateRequest.productId)
-            throw ProductAlreadyExistsException(String.format("Produto com id [%s] já existente", stockUpdateRequest.productId))
+            throw ProductAlreadyExistsException(String.format("Estoque do produto com id [%s] já está cadastrado", stockUpdateRequest.productId))
         }
 
         val stock = Stock(
