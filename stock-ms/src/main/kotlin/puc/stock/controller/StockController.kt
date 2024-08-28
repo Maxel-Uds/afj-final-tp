@@ -24,7 +24,7 @@ class StockController(val stockService: StockService) {
     @Operation(summary = "Da baixa no estoque de uma determinada quantidade de produtos")
     fun writeDown(@Valid @RequestBody stockUpdateRequest: StockUpdateRequest) : ResponseEntity<StockUpdateResponse> {
         logger.info("=== Atualizando estoque do produto [{}] com [{}] item(s)", stockUpdateRequest.productId, (stockUpdateRequest.quantity!! * -1))
-        return stockService.writeDownStock(stockUpdateRequest)
+        return ResponseEntity.ok(stockService.writeDownStock(stockUpdateRequest));
     }
 
     @PostMapping("/add-product")
@@ -32,6 +32,6 @@ class StockController(val stockService: StockService) {
     @Operation(summary = "Adiciona um novo produto ao estoque")
     fun addStock(@Valid @RequestBody stockUpdateRequest: StockUpdateRequest) : ResponseEntity<StockUpdateResponse> {
         logger.info("=== Adicionando produto [{}] ao estoque", stockUpdateRequest.productId)
-        return stockService.addProductStock(stockUpdateRequest)
+        return ResponseEntity.ok(stockService.addProductStock(stockUpdateRequest))
     }
 }

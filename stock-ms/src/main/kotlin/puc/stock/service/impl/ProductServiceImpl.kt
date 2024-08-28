@@ -10,7 +10,7 @@ import java.util.*
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 
-//@Service
+@Service
 class ProductServiceImpl(private val client: ProductClient): ProductService {
 
     private val logger = LoggerFactory.getLogger(javaClass)
