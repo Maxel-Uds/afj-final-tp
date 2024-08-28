@@ -18,7 +18,6 @@ class StockController(val stockService: StockService) {
 
     private val logger = LoggerFactory.getLogger(javaClass)
 
-
     @PatchMapping("/write-down")
     @ResponseStatus(HttpStatus.OK)
     @Operation(summary = "Da baixa no estoque de uma determinada quantidade de produtos")
@@ -30,8 +29,16 @@ class StockController(val stockService: StockService) {
     @PostMapping("/add-product")
     @ResponseStatus(HttpStatus.OK)
     @Operation(summary = "Adiciona um novo produto ao estoque")
-    fun addStock(@Valid @RequestBody stockUpdateRequest: StockUpdateRequest) : ResponseEntity<StockUpdateResponse> {
+    fun addProductStock(@Valid @RequestBody stockUpdateRequest: StockUpdateRequest) : ResponseEntity<StockUpdateResponse> {
         logger.info("=== Adicionando produto [{}] ao estoque", stockUpdateRequest.productId)
         return ResponseEntity.ok(stockService.addProductStock(stockUpdateRequest))
+    }
+
+    @GetMapping()
+    @ResponseStatus(HttpStatus.OK)
+    @Operation(summary = "Busca o produto do estoque")
+    fun getStock(@RequestParam productId: String) : ResponseEntity<StockUpdateResponse> {
+        logger.info("=== Busca o produto do estoque [{}]", productId)
+        return ResponseEntity.ok(stockService.getStock(productId))
     }
 }

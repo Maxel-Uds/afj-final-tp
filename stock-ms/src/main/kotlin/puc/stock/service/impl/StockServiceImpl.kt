@@ -57,10 +57,27 @@ class StockServiceImpl(val stockRepository: StockRepository, val productService 
         return StockUpdateResponse(stockSave.id!!, stockSave.productId, stockSave.quantity)
     }
 
+    @Transactional
+    override fun getStock(productId: String) : StockUpdateResponse {
+        val existingStock = stockRepository.findByProductId(productId)
+
+        validateStockNotExistence(existingStock, productId)
+
+        logger.info("=== Estoque [{}] encontrado", existingStock.toString())
+        return StockUpdateResponse(existingStock!!.id!!, existingStock!!.productId, existingStock!!.quantity);
+    }
+
     private fun validateStockExistence(existingStock: Stock?, stockUpdateRequest: StockUpdateRequest) {
         if (nonNull(existingStock)) {
             logger.error("=== Erro, o produto [{}] já existe no estoque", stockUpdateRequest.productId)
             throw ProductAlreadyExistsException(String.format("Estoque do produto com id [%s] já está cadastrado", stockUpdateRequest.productId))
+        }
+    }
+
+    private fun validateStockNotExistence(existingStock: Stock?, productId: String) {
+        if (existingStock == null) {
+            logger.error("=== Erro, o produto [{}] não existe no estoque", productId)
+            throw ProductNotFoundException(String.format("Produto com id [%s] não está cadastrado", productId))
         }
     }
 }

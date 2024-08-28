@@ -8,4 +8,6 @@ interface StockService {
     fun writeDownStock(stockUpdateRequest: StockUpdateRequest) : StockUpdateResponse
 
     fun addProductStock(stockUpdateRequest: StockUpdateRequest) : StockUpdateResponse
+
+    fun getStock(productId: String) : StockUpdateResponse
 }
