@@ -5,4 +5,6 @@ import puc.stock.model.Stock
 
 interface StockRepository : JpaRepository<Stock, Long> {
     fun findByProductId(productId: String): Stock?
+
+    fun getAllStock(): List<Stock>
 }

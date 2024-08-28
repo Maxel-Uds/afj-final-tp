@@ -55,4 +55,9 @@ class StockServiceImpl(val stockRepository: StockRepository, val productService 
             throw ProductAlreadyExistsException(String.format("Produto com id [%s] já existente", stockUpdateRequest.productId))
         }
     }
+
+    @Transactional
+    override fun getAllStock(): List<StockReponse> {
+        return stockRepository.getAllStock();
+    }
 }
